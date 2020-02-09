@@ -1,34 +1,35 @@
 <?php
- 
+    
 	//función que llama al controlador y su respectiva acción, que son pasados como parámetros
 	function call($controller, $action){
+        print($controller);
 		//importa el controlador desde la carpeta Controllers
-		require_once('Controllers/' . $controller . '_controller.php');
+		require_once('Controllers/' . $controller . '_Controller.php');
 		//crea el controlador
 		switch($controller){
-			case 'usuario':
-				$controller= new UsuarioController();
+			case 'User':
+				$controller= new UserController();
 				break; 
- 
+
 		}
 		//llama a la acción del controlador
-		$controller->{$action }();
+		$controller->{$_SESSION["action"] }();
 	}
- 
+
 	//array con los controladores y sus respectivas acciones
 	$controllers= array(
-						'usuario'=>['index','register','update', 'delete']
+						'User'=>['index','validarUsuario']
 						);
 	//verifica que el controlador enviado desde index.php esté dentro del arreglo controllers
 	if (array_key_exists($controller, $controllers)) {
 		//verifica que el arreglo controllers con la clave que es la variable controller del index exista la acción
-		if (in_array($action, $controllers[$controller])) {
+		if (in_array($_SESSION["action"], $controllers[$controller])) {
 			//llama  la función call y le pasa el controlador a llamar y la acción (método) que está dentro del controlador
-			call($controller, $action);
+			call($controller, $_SESSION["action"]);
 		}else{
-			call('usuario', 'error');
+			call('User', 'error');
 		}
 	}else{// le pasa el nombre del controlador y la pagina de error
-		call('usuario', 'error');
+		call('User', 'error');
 	}
 ?>

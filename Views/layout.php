@@ -5,10 +5,10 @@
 <body>
 	<table>
 		<tr>			
-			<td>Ingresar Usuarios</td>
+			<td><a href="Views/loginUsuario.php">Ingresar Usuarios</td>
 			<td>Ingrasar Administrador</td>
 		</tr>
 	</table>
-	<?php require_once('routes.php'); ?>
+	<?php require_once('./routes.php');?>
 </body>
 </html>

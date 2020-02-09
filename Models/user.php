@@ -4,23 +4,62 @@
 * Autor: ELivar Largo
 * Sitio Web: wwww.ecodeup.com
 */
-class Usuario
+class User
 {
 	//atributos
 	public $id;
-	public $alias;
-	public $nombres;
-	public $email;
+	public $nombre;
+	public $password;
+	public $admin;
  
 	//constructor de la clase
-	function __construct($id, $alias, $nombres, $email)
+	function __construct($id, $nombre, $password, $admin)
 	{
 		$this->id=$id;
-		$this->alias=$alias;
-		$this->nombres=$nombres;
-		$this->email=$email;
+		$this->nombre=$nombre;
+		$this->password=$password;
+		$this->admin=$admin;
 	}
- 
+	
+	public static function validarUsuario(){
+		$listaUsuarios=[];
+		$db=Db::getConnect();
+		$sesion=$_POST["fuser"];
+		//print($sesion);
+		$sql=$db->query("SELECT * FROM users WHERE name='$sesion'");
+		
+		foreach($sql->fetchAll() as $usuario) {
+			$listaUsuarios[]= new User($usuario['id'],$usuario['name'], $usuario['password'],$usuario['admin']);
+		}
+		//print_r($listaUsuarios);
+		if(sizeof($listaUsuarios)==1){
+			//Convierto el Obejto USER EN UN ARRAY
+			$listaUsuarios = json_decode(json_encode($listaUsuarios),true);
+			
+			if($listaUsuarios[0]['nombre']==$_POST["fuser"] || $listaUsuarios[0]['password']==$_POST["fpass"]){
+				$_SESSION["usuario"]=$listaUsuarios;
+			}else{
+				$listaUsuarios=false;	
+			}
+
+	
+
+
+		}else if(sizeof($listaUsuarios)==0){
+			print("usuario no encontrado");
+			$listaUsuarios=false;
+		}else{
+			print("error mas de un usuario igual");
+			$listaUsuarios=false;
+		}
+		//print_r($listaUsuarios);
+		return $listaUsuarios;
+	}
+	
+	
+	
+	
+	/*
 	//función para obtener todos los usuarios
 	public static function all(){
 		$listaUsuarios =[];
@@ -28,7 +67,7 @@ class Usuario
 		$sql=$db->query('SELECT * FROM usuarios');
  
 		// carga en la $listaUsuarios cada registro desde la base de datos
-		foreach ($sql->fetchAll() as $usuario) {
+		 ($sql->fforeachetchAll() as $usuario) {
 			$listaUsuarios[]= new Usuario($usuario['id'],$usuario['alias'], $usuario['nombres'],$usuario['email']);
 		}
 		return $listaUsuarios;
@@ -74,6 +113,6 @@ class Usuario
 		$usuarioDb=$select->fetch();
 		$usuario= new Usuario($usuarioDb['id'],$usuarioDb['alias'],$usuarioDb['nombres'],$usuarioDb['email']);
 		return $usuario;
-	}
+	}*/
 }
 ?>

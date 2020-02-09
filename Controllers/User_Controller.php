@@ -3,10 +3,31 @@
     {
         public function __construct(){}
         
-        public function index(){
-            echo 'login user';
-        }
+		public function index(){
+			
+		}
+		
+		public function validarUsuario(){
+			require_once('../Models/user.php');
+			return User::validarUsuario();
+		}
+		
+	}
 
+	if(isset($_POST['fenv'])){
+		require_once('../db/connection.php');
+		$encontrado=UserController::validarUsuario();
+		
+		if($encontrado){
+			//Pasamos el usuario encontrado
+			$_POST['encontrado']=$encontrado;
+			header('Location: ../Views/menu.php');
+		}else{
+			header('Location: ../Views/loginUsuario.php');
+		}
+	}
+		
+		/*
         public function createTicket(){
             echo 'Ticket created';
         }
@@ -26,7 +47,9 @@
         public function comentaryTicket(){
             echo 'Ticket comentary';
         }
-    }
+	}
+	
+	
 
     //obtiene los datos del usuario desde la vista y redirecciona a UsuarioController.php
 	if (isset($_POST['action'])) {
@@ -63,5 +86,5 @@
 			}	
 		}	
 	}
-
+	*/
 ?>
