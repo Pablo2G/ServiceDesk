@@ -1,6 +1,6 @@
 <?php
     session_start();
-    $_SESSION["controller"]="";
+    $_SESSION["controller"]="hola";
     $_SESSION["action"]="";
     $_SESSION["usuario"]="";
 ?>

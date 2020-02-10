@@ -7,6 +7,8 @@
 		$_SESSION['controller']='User';
 		$_SESSION['action']="index";
 	}
+	print_r($_SESSION["usuario"]);
+	print($_SESSION["controller"]);
 	//carga la vista layout.php
 	require_once('Views/layout.php');
 ?>

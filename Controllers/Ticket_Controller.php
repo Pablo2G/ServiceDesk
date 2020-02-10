@@ -1,4 +1,5 @@
 <?php
+  session_start();
 class TicketController
 {
     public function __construct()
@@ -19,7 +20,7 @@ class TicketController
 }
 
 if (isset($_POST['vticket'])) {
-    $usuario="admin";
+    $usuario=$_SESSION["usuario"][0]['nombre'];
     require_once('../db/connection.php');
     $encontrado = TicketController::listar($usuario);
 
@@ -41,7 +42,9 @@ if (isset($_POST['vticket'])) {
 }
 
 if(isset($_POST['descripcion'])){
-    $usuario="admin";
+    print_r($_SESSION["usuario"]);
+    $usuario=$_SESSION["usuario"][0]['nombre'];
+    print($usuario);
     $tipo=$_POST['tipo'];
     $descripcion=$_POST['descripcion'];
 

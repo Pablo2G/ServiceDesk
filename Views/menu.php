@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,8 +15,12 @@
     <form method="POST" action="./crearTicket.php">
         <input type="submit" name="cticket" value="crear ticket">
     </form>
-    <form method="POST" action="../Controllers/Ticket_Controller.php">
-        <input type="submit" value="crear usaurio">
-    </form>
+    <?php
+        if($_SESSION["usuario"][0]['admin']==true){
+            echo "<form method='POST' action='./crearUsuario.php'>";
+            echo "   <input type='submit' value='crear usaurio'>";
+            echo "</form>";
+        }
+    ?>
 </body>
 </html>

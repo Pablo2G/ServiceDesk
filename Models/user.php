@@ -1,9 +1,6 @@
 <?php
-/**
-* Modelo para el acceso a la base de datos y funciones CRUD
-* Autor: ELivar Largo
-* Sitio Web: wwww.ecodeup.com
-*/
+//Passmos los valores por sesiones
+session_start();
 class User
 {
 	//atributos
@@ -37,7 +34,9 @@ class User
 			$listaUsuarios = json_decode(json_encode($listaUsuarios),true);
 			
 			if($listaUsuarios[0]['nombre']==$_POST["fuser"] || $listaUsuarios[0]['password']==$_POST["fpass"]){
+				print('llega');
 				$_SESSION["usuario"]=$listaUsuarios;
+				print_r($_SESSION["usuario"]);
 			}else{
 				$listaUsuarios=false;	
 			}
