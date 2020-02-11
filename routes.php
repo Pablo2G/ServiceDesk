@@ -1,5 +1,5 @@
 <?php
-    
+/*
 	//función que llama al controlador y su respectiva acción, que son pasados como parámetros
 	function call($controller, $action){
         print($controller);
@@ -31,5 +31,5 @@
 		}
 	}else{// le pasa el nombre del controlador y la pagina de error
 		call('User', 'error');
-	}
+	}*/
 ?>

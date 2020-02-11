@@ -27,6 +27,13 @@ if (isset($_POST['vticket'])) {
     if ($encontrado) {
         //Pasamos el usuario encontrado
         echo '<table border="1">';
+        echo '<tr><td> ID </td>';
+        echo '<td> TIPO </td>';
+        echo '<td> DESCRIPCION </td>';
+        echo '<td> FECHA </td>';
+        echo '<td> ESTADO </td>';
+        echo '<td> TECNICO </td>';
+        echo '<td> CREADO POR </td></tr>';
         foreach ($encontrado as $ticket) {
             echo '<tr>';
             foreach ($ticket as $campo) {

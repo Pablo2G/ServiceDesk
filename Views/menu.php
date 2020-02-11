@@ -20,6 +20,9 @@
             echo "<form method='POST' action='./crearUsuario.php'>";
             echo "   <input type='submit' value='crear usaurio'>";
             echo "</form>";
+            echo "<form method='POST' action='./verUsuarios.php'>";
+            echo "   <input type='submit' name='vusuarios' value='ver usuarios'>";
+            echo "</form>";
         }
     ?>
 </body>

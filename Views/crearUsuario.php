@@ -12,7 +12,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form method="POST" action="../Controllers/Admin_Controller.php">
+    <form method="POST" action="../Controllers/User_Controller.php">
         Usuario:<input type="text" name="usuario" required><br>
         Password:<input type="text" name="password" required><br>
         administrador:

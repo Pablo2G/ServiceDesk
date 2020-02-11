@@ -51,7 +51,7 @@ class Ticket
         $insert=$db->prepare('INSERT INTO tickets VALUES(NULL, :tipo, :descripcion, :fecha, 1, 1, :usuario)');
         $insert->bindValue('tipo',$tipo);
         $insert->bindValue('descripcion',$descripcion);
-        $insert->bindValue('fecha',date('j-m-Y'));
+        $insert->bindValue('fecha',date('Y-m-j'));
         $insert->bindValue('usuario',$usuario);
         $insert->execute();
     }

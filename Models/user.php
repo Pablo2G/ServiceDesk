@@ -55,9 +55,36 @@ class User
 		return $listaUsuarios;
 	}
 	
-	
-	
-	
+	   public static function crearUsuario($usuario, $password, $admin){
+			$db=Db::getConnect();
+
+			$sql=$db->query("SELECT * FROM users WHERE name='$usuario'");
+			
+			$listaUsuarios[]=$sql->fetchAll();
+			if(empty($listaUsuarios[0])){
+				//El usuario no existe lo podemos crear
+				$insert=$db->prepare('INSERT INTO users VALUES(NULL,:name, :password, :admin)');
+				$insert->bindValue('name',$usuario);
+				$insert->bindValue('password',$password);
+				$insert->bindValue('admin',$admin);
+				$insert->execute();
+			}else{
+				//El usuario ya existe NO LO PODEMOS crear
+				print('usuario ya existe no creado');
+			}
+		}
+
+		public static function listar(){
+			$listaUsuarios =[];
+			$db=Db::getConnect();
+			$sql=$db->query('SELECT * FROM users');
+		 	// carga en la $listaUsuarios cada registro desde la base de datos
+			foreach ($sql->fetchAll() as $usuario) {
+				$listaUsuarios[]= new User($usuario['id'],$usuario['name'], $usuario['password'],$usuario['admin']);
+			}
+			return $listaUsuarios;
+		
+		}
 	/*
 	//función para obtener todos los usuarios
 	public static function all(){

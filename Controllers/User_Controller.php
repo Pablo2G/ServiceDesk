@@ -12,6 +12,17 @@
 			require_once('../Models/user.php');
 			return User::validarUsuario();
 		}
+
+		public function crearUsuario(){
+			require_once('../Models/user.php');
+			return User::crearUsuario($_POST['usuario'],$_POST['password'],$_POST['admin']);
+		}
+
+		public function listar()
+		{
+			require_once('../Models/user.php');
+			return user::listar();
+		}
 		
 	}
 
@@ -27,7 +38,52 @@
 			header('Location: ../Views/loginUsuario.php');
 		}
 	}
-		
+
+	if(isset($_POST['fcrearusuario'])){
+		require_once('../db/connection.php');
+		UserController::crearUsuario();
+	}
+	
+	if (isset($_POST['vusuarios'])) {
+		require_once('../db/connection.php');
+		$encontrado=UserController::listar();
+		if ($encontrado) {
+			//Pasamos el usuario encontrado
+			echo '<table border="1">';
+			echo '<tr><td> ID </td>';
+			echo '<td> USUARIO </td>';
+			echo '<td> PASSWORD </td>';
+			echo '<td> TIPO </td>';
+			echo '<td> Accion </td></tr>';
+			$id;
+			$inicio=1;
+			foreach ($encontrado as $ticket) {
+				echo '<tr>';
+				foreach ($ticket as $campo) {
+					echo '<td>' . $campo . '</td>';
+					if($inicio==1){
+						$id=$campo;
+					}
+					$inicio=$inicio+1;
+				}
+				$inicio=1;
+				echo '<td>';
+				echo "<form method='POST' action='./updateUsuario.php'>";
+				echo "   <input type='submit' name=updateusuario" . $id . "' value='Actualizar usaurio'>";
+				echo "</form>";
+				echo "<form method='POST' action='./deleteUsuarios.php'>";
+				echo "   <input type='submit' name='deleteusuarios" . $id . "' value='Borrar usuarios'>";
+				echo "</form>";
+				echo '</td></tr>';
+
+			}
+			echo '</table>';
+		} else {
+			echo "no encontrado";
+		}
+
+		unset($_POST['vusuarios']);
+	}
 		/*
         public function createTicket(){
             echo 'Ticket created';
