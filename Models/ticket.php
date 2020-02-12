@@ -48,7 +48,7 @@ class Ticket
     public static function crearTicket($usuario,$tipo,$descripcion){
         $db=Db::getConnect();
         $db=Db::getConnect();
-        $insert=$db->prepare('INSERT INTO tickets VALUES(NULL, :tipo, :descripcion, :fecha, 1, 1, :usuario)');
+        $insert=$db->prepare('INSERT INTO tickets VALUES(NULL, :tipo, :descripcion, :fecha, 0, 1, :usuario)');
         $insert->bindValue('tipo',$tipo);
         $insert->bindValue('descripcion',$descripcion);
         $insert->bindValue('fecha',date('Y-m-j'));

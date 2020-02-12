@@ -23,6 +23,11 @@
 			require_once('../Models/user.php');
 			return user::listar();
 		}
+
+		public function borrarUsuario($id){
+			require_once('../Models/user.php');
+			return user::borrarUsuario($id);
+		}
 		
 	}
 
@@ -68,22 +73,22 @@
 				}
 				$inicio=1;
 				echo '<td>';
-				echo "<form method='POST' action='./updateUsuario.php'>";
-				echo "   <input type='submit' name=updateusuario" . $id . "' value='Actualizar usaurio'>";
-				echo "</form>";
-				echo "<form method='POST' action='./deleteUsuarios.php'>";
-				echo "   <input type='submit' name='deleteusuarios" . $id . "' value='Borrar usuarios'>";
-				echo "</form>";
+				echo "<a href='../Controllers/User_Controller.php?action=update&id=$id'><input type='button' value='Actualizar usuario'></a>";
+				echo "<a href='../Controllers/User_Controller.php?action=deleta&id=$id'><input type='button' value='Borrar usuario'></a>";
 				echo '</td></tr>';
 
 			}
 			echo '</table>';
+
 		} else {
 			echo "no encontrado";
 		}
-
 		unset($_POST['vusuarios']);
 	}
+
+	if(isset)
+
+
 		/*
         public function createTicket(){
             echo 'Ticket created';

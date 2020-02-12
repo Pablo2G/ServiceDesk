@@ -41,9 +41,6 @@ class User
 				$listaUsuarios=false;	
 			}
 
-	
-
-
 		}else if(sizeof($listaUsuarios)==0){
 			print("usuario no encontrado");
 			$listaUsuarios=false;
@@ -72,6 +69,15 @@ class User
 				//El usuario ya existe NO LO PODEMOS crear
 				print('usuario ya existe no creado');
 			}
+		}
+
+		public static function borrarUsuario($id){
+			$db=Db::getConnect();
+
+			$db=Db::getConnect();
+			$delete=$db->prepare('DELETE FROM usuarios WHERE ID=:id');
+			$delete->bindValue('id',$id);
+			$delete->execute();
 		}
 
 		public static function listar(){

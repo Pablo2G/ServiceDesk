@@ -31,15 +31,39 @@ if (isset($_POST['vticket'])) {
         echo '<td> TIPO </td>';
         echo '<td> DESCRIPCION </td>';
         echo '<td> FECHA </td>';
-        echo '<td> ESTADO </td>';
         echo '<td> TECNICO </td>';
-        echo '<td> CREADO POR </td></tr>';
+        echo '<td> ESTADO </td>';
+        echo '<td> CREADO POR </td>';
+        echo '<td> ACCION </td></tr>';
+        $id;
+        $inicio=1;
         foreach ($encontrado as $ticket) {
             echo '<tr>';
             foreach ($ticket as $campo) {
-                echo '<td>' . $campo . '</td>';
+                if($inicio!=6){
+                    echo '<td>' . $campo . '</td>';
+                    if($inicio==1){
+                        $id=$campo;
+                    }
+                }else{
+                    if($campo==0){
+                        echo '<td> PENDIENTE </td>';
+                    }else if($campo==1){
+                        echo '<td> OK </td>';
+                    }
+                }
+                $inicio=$inicio+1;
             }
-            echo '</tr>';
+            $inicio=1;
+            echo 
+            echo '<td>';
+            echo "<form method='POST' action='./updateTicket.php'>";
+            echo "   <input type='submit' name=updateticket" . $id . "' value='Actualizar ticket'>";
+            echo "</form>";
+            echo "<form method='POST' action='./deleteTicket.php'>";
+            echo "   <input type='submit' name='deleteticket" . $id . "' value='Borrar ticket'>";
+            echo "</form>";
+            echo '</td></tr>';
         }
         echo '</table>';
     } else {
