@@ -1,11 +1,11 @@
 <?php
 //Passmos los valores por sesiones
 
-    $estado_session = session_status();
+$estado_session = session_status();
 
-    if ($estado_session == PHP_SESSION_NONE) {
-        session_start();
-    }
+if ($estado_session == PHP_SESSION_NONE) {
+	session_start();
+}
 
 
 class User
@@ -40,7 +40,7 @@ class User
 		if (sizeof($listaUsuarios) == 1) {
 			//Convierto el Obejto USER EN UN ARRAY
 			$listaUsuarios = json_decode(json_encode($listaUsuarios), true);
-
+			//Comprobamos que el usuario y contraseña son correctos
 			if ($listaUsuarios[0]['nombre'] == $_POST["fuser"] && $listaUsuarios[0]['password'] == $_POST["fpass"]) {
 				$_SESSION["usuario"] = $listaUsuarios;
 			} else {
@@ -60,10 +60,10 @@ class User
 	public static function crearUsuario($usuario, $password, $admin)
 	{
 		$db = Db::getConnect();
-
+		//Vamos a comprobar el usuario que vamos a crear no exista
 		$sql = $db->query("SELECT * FROM users WHERE name='$usuario'");
-
 		$listaUsuarios[] = $sql->fetchAll();
+		//Si esta vacio no exite
 		if (empty($listaUsuarios[0])) {
 			//El usuario no existe lo podemos crear
 			$insert = $db->prepare('INSERT INTO users VALUES(NULL,:name, :password, :admin)');
