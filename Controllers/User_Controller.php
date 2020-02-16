@@ -48,6 +48,11 @@ class UserController
 	}
 }
 
+//Control para ir a index si no sesion iniciada
+if($_SESSION["usuario"][0]['nombre']==""){
+    header('Location: ../Views/Usuario/cerrarSesion.php');
+}
+
 if (isset($_POST['fenv'])) {
 	require_once('../db/connection.php');
 	$encontrado = UserController::validarUsuario();

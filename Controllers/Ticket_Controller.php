@@ -43,6 +43,11 @@ class TicketController
     }
 }
 
+//Control para ir a index si no sesion iniciada
+if($_SESSION["usuario"][0]['nombre']==""){
+    header('Location: ../Views/Usuario/cerrarSesion.php');
+}
+
 //Ver Ticker Usuario
 if (isset($_POST['vticket'])) {
     $usuario = $_SESSION["usuario"][0]['nombre'];
@@ -177,8 +182,8 @@ if(isset($_POST["fconsulta"])){
             //Imprimir solo si es administrador
             if ($_SESSION["usuario"][0]['admin'] == 1) {
                 echo '<td>';
-                echo "<a href='../Ticket/updateTicket.php?action=update&id=$id'><input type='button' value='Actualizar Ticket'></a>";
-                echo "<a href='../Ticket/borrarTicket.php?action=delete&id=$id'><input type='button' value='Borrar Ticket'></a>";
+                echo "<a href='../Views/Ticket/updateTicket.php?action=update&id=$id'><input type='button' value='Actualizar Ticket'></a>";
+                echo "<a href='../Views/Ticket/borrarTicket.php?action=delete&id=$id'><input type='button' value='Borrar Ticket'></a>";
                 echo '</td>';
             }
             echo '</tr>';
