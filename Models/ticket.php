@@ -51,7 +51,7 @@ class Ticket
             //Convierto el Obejto USER EN UN ARRAY
             $listaTickets = json_decode(json_encode($listaTickets), true);
         } else if (sizeof($listaTickets) == 0) {
-            print("usuario no encontrado");
+            print("Ticket no encontrado");
             $listaTickets = false;
         }
         //print_r($listaUsuarios);
@@ -83,12 +83,14 @@ class Ticket
             }
         }
 
-        if (sizeof($listaTickets) >= 1) {
-            //Convierto el Obejto USER EN UN ARRAY
-            $listaTickets = json_decode(json_encode($listaTickets), true);
-        } else if (sizeof($listaTickets) == 0) {
-            print("usuario no encontrado");
-            $listaTickets = false;
+        if($listaTickets!=""){
+            if (sizeof($listaTickets) >= 1) {
+                //Convierto el Obejto USER EN UN ARRAY
+                $listaTickets = json_decode(json_encode($listaTickets), true);
+            } else if (sizeof($listaTickets) == 0) {
+                print("Ticket no encontrado");
+                $listaTickets = false;
+            }
         }
         //print_r($listaUsuarios);
         return $listaTickets;

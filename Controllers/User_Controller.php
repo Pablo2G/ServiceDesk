@@ -108,85 +108,44 @@ if (isset($_POST['vusuarios'])) {
 }
 
 if (isset($_GET["action"])) {
+	/*//Conectamos a la Base de Datos*/
+	require_once('../db/connection.php');
+	$db = Db::getConnect();
+	
+	$id = $_GET["id"];
 	
 	if ($_GET["action"] == "delete") {
-		require_once('../db/connection.php');
-		$id = (int) $_GET["id"];
 		$borrar=UserController::borrarUsuario($id);
+		//Volvemos al menu
 		header('Location: ../Views/Plantilla/menu.php');
-	
 	} else if ($_GET["action"] == "update") {
-		require_once('../db/connection.php');
-		$id = (int) $_GET["id"];
 		$usuario = $_POST["usuario"];
 		$password = $_POST["password"];
 		$admin = (int) $_POST["admin"];
+		
+		//Si el usuario tiene tickets los actualizamos tanto que sea admin y los de usuario
+		//Controlo si deja de ser admin pasen a sin asignar
+		/*print_r($ticketUsuario);
+		if($ticketUsuario!=""){
+			//Ticket en la parte de admin
+			$sql = "UPDATE tickets SET technical=? WHERE technical=?";
+			$stmt = $db->prepare($sql);
+			if($admin==1){
+				//En los ticket que es admin les cambiamos el nombre
+				$stmt->execute([$usuario][$consulUsuario['name']]);
+			}else{
+				//En los que no es admin los dejo sin asignar
+				$stmt->execute(["0"][$consulUsuario['name']]);
+			}
+			//Ticket en la parte de usuario
+			$sql = "UPDATE tickets SET users=? WHERE users=?";
+			$stmt = $db->prepare($sql);
+			$stmt->execute([$usuario][$consulUsuario['name']]);
+		}*/
 
 		$update = UserController::updateUsuario($id, $usuario, $password, $admin);
-		header('Location: ../Views/Plantilla/menu.php');
+		//header('Location: ../Views/Plantilla/menu.php');
 	} else {
 		print("error");
 	}
 }
-
-
-		/*
-        public function createTicket(){
-            echo 'Ticket created';
-        }
-
-        public function updateTicket(){
-            echo 'Ticket updated';
-        }        
-
-        public function viewTicket(){
-            echo 'Ticked view';
-        }
-
-        public function closeTicket(){
-            echo 'Ticket closed';
-        }
-
-        public function comentaryTicket(){
-            echo 'Ticket comentary';
-        }
-	}
-	
-	
-
-    //obtiene los datos del usuario desde la vista y redirecciona a UsuarioController.php
-	if (isset($_POST['action'])) {
-		$usuarioController= new UserController();
-		//se añade el archivo usuario.php
-		require_once('../Models/usuario.php');
-		
-		//se añade el archivo para la conexion
-		require_once('../db/connection.php');
- 
-		if ($_POST['action']=='register') {
-			$usuario= new Usuario(null,$_POST['alias'],$_POST['nombres'],$_POST['email']);
-			$usuarioController->save($usuario);
-		}elseif ($_POST['action']=='update') {
-			$usuario= new Usuario($_POST['id'],$_POST['alias'],$_POST['nombres'],$_POST['email']);
-			$usuarioController->update($usuario);
-		}		
-	}
- 
-	//se verifica que action esté definida
-	if (isset($_GET['action'])) {
-		if ($_GET['action']!='register'&$_GET['action']!='index') {
-			require_once('../db/connection.php');
-			$usuarioController=new UserController();
-			//para eliminar
-			if ($_GET['action']=='delete') {		
-				$usuarioController->delete($_GET['id']);
-			}elseif ($_GET['action']=='update') {//mostrar la vista update con los datos del registro actualizar
-				require_once('../Models/usuario.php');				
-				$usuario=Usuario::getById($_GET['id']);		
-				//var_dump($usuario);
-				//$usuarioController->update();
-				require_once('../Views/Usuario/update.php');
-			}	
-		}	
-	}
-	*/

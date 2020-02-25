@@ -75,9 +75,9 @@ class TicketController
                         }
                     } else {
                         if ($campo == 0) {
-                            echo '<td> OK </td>';
-                        } else if ($campo == 1) {
                             echo '<td> PENDIENTE </td>';
+                        } else if ($campo == 1) {
+                            echo '<td> OK </td>';
                         }
                     }
                     $inicio = $inicio + 1;
@@ -93,8 +93,57 @@ class TicketController
                 echo '</tr>';
             }
             echo '</table>';
-        } else {
-            echo "no encontrado";
+        }
+    }
+
+    public function imprimirTicketAdmin($vectorTicket)
+    {
+        //La funcion que lo implementa devulve false o un ticket
+        if ($vectorTicket) {
+            //Pasamos el usuario encontrado
+            echo '<table border="1">';
+            echo '<tr><td> ID </td>';
+            echo '<td> TIPO </td>';
+            echo '<td> DESCRIPCION </td>';
+            echo '<td> FECHA </td>';
+            echo '<td> TECNICO </td>';
+            echo '<td> ESTADO </td>';
+            echo '<td> CREADO POR </td>';
+            //Imprimir solo si es administrador
+            if ($_SESSION["usuario"][0]['admin'] == 1) {
+                echo '<td> ACCION </td>';
+            }
+            echo '</tr>';
+            $id = "";
+            $inicio = 1;
+            foreach ($vectorTicket as $ticket) {
+                echo '<tr>';
+                foreach ($ticket as $campo) {
+                    if ($inicio != 6) {
+                        echo '<td>' . $campo . '</td>';
+                        if ($inicio == 1) {
+                            $id = $campo;
+                        }
+                    } else {
+                        if ($campo == 0) {
+                            echo '<td> PENDIENTE </td>';
+                        } else if ($campo == 1) {
+                            echo '<td> OK </td>';
+                        }
+                    }
+                    $inicio = $inicio + 1;
+                }
+                $inicio = 1;
+                //Imprimir solo si es administrador
+                if ($_SESSION["usuario"][0]['admin'] == 1) {
+                    echo '<td>';
+                    echo "<a href='../Views/Ticket/updateTicket.php?action=update&id=$id'><input type='button' value='Actualizar Ticket'></a>";
+                    echo "<a href='../Views/Ticket/borrarTicket.php?action=delete&id=$id'><input type='button' value='Borrar Ticket'></a>";
+                    echo '</td>';
+                }
+                echo '</tr>';
+            }
+            echo '</table>';
         }
     }
 }
@@ -149,9 +198,10 @@ if (isset($_GET["action"])) {
 
 //Consulta de datos para Admin
 if (isset($_POST["fconsulta"])) {
+    print("llega");
     require_once('../db/connection.php');
     $usuario = $_POST["tecnico"];
     $estado = $_POST["estado"];
     $encontrado = TicketController::consultaTicket($usuario, $estado);
-    TicketController::imprimirTicket($encontrado);
+    TicketController::imprimirTicketAdmin($encontrado);
 }

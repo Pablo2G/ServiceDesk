@@ -92,16 +92,36 @@ class User
 	public static function updateUsuario($id, $nombre, $password, $admin)
 	{
 		$db = Db::getConnect();
+		//Sacamos en nombre del usuario
+		$sql = "SELECT name FROM users WHERE id=?";
+		$stmt = $db->prepare($sql);
+		$stmt->execute([$id]);
+		$usuario = $stmt->fetch();
+		//Actualizamos en Usuario
 		$sql = "UPDATE users SET name=?, password=?, admin=? WHERE id=?";
 		$update = $db->prepare($sql);
 		$update->execute([$nombre, $password, $admin, $id]);
+		//Actualizamos los tickets
+		$sql = "UPDATE tickets SET users=? WHERE users=?";
+		$update = $db->prepare($sql);
+		$update->execute([$nombre, $usuario['name']]);
 	}
 
 	public static function borrarUsuario($id)
 	{
 		$db = Db::getConnect();
+		//Sacamos en nombre del usuario
+		$sql = "SELECT name FROM users WHERE id=?";
+		$stmt = $db->prepare($sql);
+		$stmt->execute([$id]);
+		$usuario = $stmt->fetch();
+		//Borrar Usuario
 		$sql = "DELETE FROM users WHERE id=?";
-		$update = $db->prepare($sql);
-		$update->execute([$id]);
+		$delete = $db->prepare($sql);
+		$delete->execute([$id]);
+		//Borrar ticket
+		$sql = "DELETE FROM tickets WHERE users=?";
+		$delete = $db->prepare($sql);
+		$delete->execute([$usuario['name']]);
 	}
 }

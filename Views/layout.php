@@ -11,6 +11,46 @@
 
 <head>
 	<title>ServiceDesk MVC </title>
+		<style type="text/css">
+		body{background-color: #CEECF5;
+		}
+		.button {
+			background-color: #4CAF50;
+			border: none;
+			color: white;
+			width: 250px;
+			padding-top: 100px;
+			padding-bottom: 100px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 20px;
+			margin: 4px 2px;
+			cursor: pointer;
+			position: absolute;
+			top: 50%; 
+  			left: 50%;
+ 			transform: translate(-50%, -50%);
+		}
+
+		.buttondelete {
+			background-color: #FE2E2E;
+			border: none;
+			color: white;
+			width: 250px;
+			padding-top: 100px;
+			padding-bottom: 100px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 20px;
+			margin: 4px 2px;
+			cursor: pointer;
+			top: 50%; 
+  			left: 50%;
+ 			transform: translate(-50%, -50%);
+		}
+	</style>
 </head>
 
 <body>
